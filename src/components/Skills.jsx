@@ -14,12 +14,15 @@ const skills = [
 
 function SkillCloud({ s, index }) {
   const [open, setOpen] = useState(false)
+  const isTouch = typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches
+  const interactionProps = isTouch
+    ? { onClick: () => setOpen(o => !o) }
+    : { onMouseEnter: () => setOpen(true), onMouseLeave: () => setOpen(false) }
   return (
     <FadeIn delay={index * 0.07}>
       <div
         className="flex flex-col items-center"
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        {...interactionProps}
       >
         <Cloud width={260} height={110} floatDuration={4 + (index % 3) * 0.6} floatDelay={index * 0.15}>
           <span className="font-['Titillium_Web'] font-bold text-white text-[0.95rem] leading-snug">
@@ -52,7 +55,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="full-section py-28 px-6 md:px-16 bg-black"
+      className="full-section py-28 px-6 md:px-16 bg-black items-center"
     >
       <div className="max-w-6xl mx-auto w-full">
 
