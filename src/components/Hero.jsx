@@ -27,8 +27,16 @@ export default function Hero() {
     <section
       id="hero"
       ref={heroRef}
-      className="full-section relative overflow-hidden bg-black"
+      className="full-section relative overflow-hidden bg-black items-center"
     >
+      <img
+        src="/campus.webp"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        style={{ opacity: 0.18, zIndex: 0 }}
+      />
+
       <CloudCanvas lightningTrigger={trigger} />
 
       <div
@@ -36,16 +44,17 @@ export default function Hero() {
         style={{ height: '160px', background: 'linear-gradient(to top, #000 0%, transparent 100%)', zIndex: 3 }}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 grid md:grid-cols-[1.25fr_0.85fr] gap-10 items-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 md:px-16 flex flex-col items-center text-center">
 
         {/* Text column */}
         <motion.div
+          className="flex flex-col items-center"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* floating cloud tag, positioned just above the name */}
-          <div className="mb-3 -ml-2">
+          {/* floating cloud tag, centered above the name */}
+          <div className="mb-3">
             <Cloud width={250} height={92} floatDuration={5}>
               <span className="font-['Titillium_Web'] font-bold text-white text-sm md:text-base tracking-wide whitespace-nowrap">
                 Software Engineer
@@ -72,7 +81,7 @@ export default function Hero() {
             I build systems from the ground up: neural networks, 2D game engines, logic circuits.
           </p>
 
-          <div className="flex flex-wrap gap-3 mt-9 -ml-2">
+          <div className="flex flex-wrap justify-center gap-3 mt-9">
             <Cloud href="#projects" width={205} height={84} floatDuration={4.2}>
               <span className="font-['Titillium_Web'] font-bold text-[#060F1A] text-[0.82rem] tracking-wide whitespace-nowrap">
                 View Projects
@@ -83,24 +92,6 @@ export default function Hero() {
                 Get In Touch
               </span>
             </Cloud>
-          </div>
-        </motion.div>
-
-        {/* Photo column, isolated so text never collides */}
-        <motion.div
-          className="justify-self-center md:justify-self-end"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="relative w-56 h-72 md:w-64 md:h-80">
-            <div className="absolute -top-3 -right-3 w-full h-full border border-[#7ECEF0]/30" />
-            <img
-              src="/me.webp"
-              alt="Muhammad Anas"
-              className="relative w-full h-full object-cover object-top"
-              style={{ filter: 'brightness(0.92)' }}
-            />
           </div>
         </motion.div>
 
