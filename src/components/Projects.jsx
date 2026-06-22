@@ -28,14 +28,17 @@ const projects = [
 
 function ProjectCard({ p, index }) {
   const [hovered, setHovered] = useState(false)
+  const isTouch = typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches
+  const interactionProps = isTouch
+    ? { onClick: () => setHovered(h => !h) }
+    : { onMouseEnter: () => setHovered(true), onMouseLeave: () => setHovered(false) }
 
   return (
     <FadeIn delay={index * 0.12}>
       <div
         data-hover
         className="relative overflow-hidden border border-white/10 group cursor-pointer h-[340px] md:h-[380px]"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        {...interactionProps}
       >
         <motion.img
           src={p.img}
@@ -103,7 +106,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="full-section py-28 px-6 md:px-16 bg-black"
+      className="full-section py-28 px-6 md:px-16 bg-black items-center"
     >
       <div className="max-w-6xl mx-auto w-full">
 
