@@ -7,6 +7,7 @@ const experiences = [
     title: 'Tetra Technology',
     tech: 'Backend Intern / C# / .NET',
     img: null,
+    logo: '/tetra.webp',
     icon: 'stack',
     meta: 'Jun 2026 - Aug 2026 · Gulberg Greens, Islamabad · On-site',
     desc: 'A three month on-site backend internship working in C# and .NET. I learned Clean Architecture, the repository pattern, and the Microsoft Identity framework, along with how the backend of a real web application is structured and operated.',
@@ -40,7 +41,7 @@ const icons = {
   ),
 }
 
-function Placeholder({ icon, hovered }) {
+function Placeholder({ icon, logo, hovered }) {
   return (
     <motion.div
       className="absolute inset-0 w-full h-full"
@@ -50,7 +51,9 @@ function Placeholder({ icon, hovered }) {
       }}
       animate={{
         scale: hovered ? 1.05 : 1,
-        filter: hovered ? 'brightness(0.5) saturate(0.85)' : 'brightness(0.9) saturate(0.95)',
+        filter: hovered
+          ? 'brightness(0.5) saturate(0.85)'
+          : logo ? 'brightness(1) saturate(1)' : 'brightness(0.9) saturate(0.95)',
       }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -62,17 +65,26 @@ function Placeholder({ icon, hovered }) {
           backgroundSize: '38px 38px',
         }}
       />
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#7ECEF0"
-        strokeWidth="0.55"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="absolute left-1/2 top-[30%] w-32 h-32 -translate-x-1/2 -translate-y-1/2 opacity-50"
-      >
-        {icons[icon]}
-      </svg>
+      {logo ? (
+        <img
+          src={logo}
+          alt=""
+          className="absolute left-1/2 top-[30%] w-44 h-44 -translate-x-1/2 -translate-y-1/2 rounded-[26px] border border-white/10"
+          style={{ boxShadow: '0 0 48px rgba(126,206,240,0.22)' }}
+        />
+      ) : (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#7ECEF0"
+          strokeWidth="0.55"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="absolute left-1/2 top-[30%] w-32 h-32 -translate-x-1/2 -translate-y-1/2 opacity-50"
+        >
+          {icons[icon]}
+        </svg>
+      )}
     </motion.div>
   )
 }
@@ -103,7 +115,7 @@ function ExperienceCard({ e, index }) {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           />
         ) : (
-          <Placeholder icon={e.icon} hovered={hovered} />
+          <Placeholder icon={e.icon} logo={e.logo} hovered={hovered} />
         )}
 
         <div
