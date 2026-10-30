@@ -10,16 +10,19 @@ const skills = [
   { name: 'Algorithms and Mathematics', desc: 'Discrete mathematics, complexity analysis, sorting and searching, formal proofs, mathematical modeling.' },
   { name: 'Problem Solving', desc: 'Systematic decomposition of hard problems, architectural thinking, debugging across the full stack from hardware to application.' },
   { name: 'Digital Logic Design', desc: '74LS series ICs, encoder and decoder circuits, SR latches, 7 segment display drivers, breadboard prototyping from scratch.' },
+  { name: 'Assembly Language (COAL)', desc: 'Computer Organization and Assembly Language: CPU architecture, registers, memory addressing, instruction sets, stack operations, and low level control flow.' },
+  { name: 'Data Structures', desc: 'Stacks, linked structures, dynamic memory, pointers, jagged arrays, and Big O complexity analysis, all implemented from scratch in C++.' },
 ]
 
-function SkillCloud({ s, index }) {
+function SkillCloud({ s, index, total }) {
   const [open, setOpen] = useState(false)
   const isTouch = typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches
   const interactionProps = isTouch
     ? { onClick: () => setOpen(o => !o) }
     : { onMouseEnter: () => setOpen(true), onMouseLeave: () => setOpen(false) }
+  const centerLastRow = total % 3 === 2 && index === total - 2 ? 'lg:col-start-2' : ''
   return (
-    <FadeIn delay={index * 0.07}>
+    <FadeIn delay={index * 0.07} className={`lg:col-span-2 ${centerLastRow}`}>
       <div
         className="flex flex-col items-center"
         {...interactionProps}
@@ -72,8 +75,8 @@ export default function Skills() {
           <div className="w-12 h-[2px] bg-[#7ECEF0]/60 mt-5 mx-auto" />
         </FadeIn>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-4 justify-items-center">
-          {skills.map((s, i) => <SkillCloud key={s.name} s={s} index={i} />)}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-y-12 gap-x-4 justify-items-center">
+          {skills.map((s, i) => <SkillCloud key={s.name} s={s} index={i} total={skills.length} />)}
         </div>
 
       </div>
