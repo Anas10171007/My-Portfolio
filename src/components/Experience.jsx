@@ -17,10 +17,21 @@ const experiences = [
     title: 'NASCON Hackathon',
     tech: 'Web Dev / Node.js / Supabase',
     img: null,
+    cert: '/nascon-certificate.webp',
     icon: 'code',
-    meta: 'FAST NUCES, Islamabad · Team Event',
-    desc: 'Took part in the NASCON web development hackathon at FAST NUCES. Our team built a CRM using Node.js and Supabase, and I served as the backend manager, leading the backend side of the project.',
-    certificate: null,
+    meta: 'NaSCon 26 · 16-18 Oct 2026',
+    desc: 'Took part in the NaSCon 26 web development hackathon at FAST-NUCES, Islamabad. Our team built a CRM using Node.js and Supabase, and I served as the backend manager, leading the backend side of the project.',
+    certificate: '/nascon-certificate.webp',
+  },
+  {
+    title: 'Software Engineering Society',
+    tech: 'Organizing Team / Event Decoration',
+    img: null,
+    cert: '/ses-certificate.webp',
+    icon: 'team',
+    meta: 'SES · Speed Programming Event',
+    desc: 'Served on the organizing team of the Speed Programming competition, handling event decoration and organization. Received a Certificate of Appreciation for dedication, teamwork and commitment.',
+    certificate: '/ses-certificate.webp',
   },
 ]
 
@@ -39,9 +50,21 @@ const icons = {
       <line x1="14" y1="5" x2="10" y2="19" />
     </>
   ),
+  team: (
+    <>
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+      <circle cx="17" cy="9" r="2.5" />
+      <path d="M16 14.2c.3-.1.7-.2 1-.2 2.8 0 5 2.2 5 5" />
+    </>
+  ),
 }
 
-function Placeholder({ icon, logo, hovered }) {
+function Placeholder({ icon, logo, cert, hovered }) {
+  const [broken, setBroken] = useState(false)
+  const showLogo = logo && !broken
+  const showCert = cert && !broken && !showLogo
+  const filled = showLogo || showCert
   return (
     <motion.div
       className="absolute inset-0 w-full h-full"
@@ -52,8 +75,8 @@ function Placeholder({ icon, logo, hovered }) {
       animate={{
         scale: hovered ? 1.05 : 1,
         filter: hovered
-          ? 'brightness(0.5) saturate(0.85)'
-          : logo ? 'brightness(1) saturate(1)' : 'brightness(0.9) saturate(0.95)',
+          ? (showCert ? 'brightness(0.32) saturate(0.8)' : 'brightness(0.5) saturate(0.85)')
+          : filled ? 'brightness(1) saturate(1)' : 'brightness(0.9) saturate(0.95)',
       }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -65,11 +88,20 @@ function Placeholder({ icon, logo, hovered }) {
           backgroundSize: '38px 38px',
         }}
       />
-      {logo ? (
+      {showLogo ? (
         <img
           src={logo}
           alt=""
+          onError={() => setBroken(true)}
           className="absolute left-1/2 top-[30%] w-44 h-44 -translate-x-1/2 -translate-y-1/2 rounded-[26px] border border-white/10"
+          style={{ boxShadow: '0 0 48px rgba(126,206,240,0.22)' }}
+        />
+      ) : showCert ? (
+        <img
+          src={cert}
+          alt=""
+          onError={() => setBroken(true)}
+          className="absolute left-1/2 top-[30%] h-[52%] w-auto -translate-x-1/2 -translate-y-1/2 rounded-[4px] border border-white/15"
           style={{ boxShadow: '0 0 48px rgba(126,206,240,0.22)' }}
         />
       ) : (
@@ -115,7 +147,7 @@ function ExperienceCard({ e, index }) {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           />
         ) : (
-          <Placeholder icon={e.icon} logo={e.logo} hovered={hovered} />
+          <Placeholder icon={e.icon} logo={e.logo} cert={e.cert} hovered={hovered} />
         )}
 
         <div
@@ -195,7 +227,7 @@ export default function Experience() {
           <div className="w-12 h-[2px] bg-[#7ECEF0]/60 mt-5" />
         </FadeIn>
 
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {experiences.map((e, i) => <ExperienceCard key={e.title} e={e} index={i} />)}
         </div>
 
